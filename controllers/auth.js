@@ -10,6 +10,7 @@ export const createUser = async (req, res) => {
       username: req.body.username,
       useremail: req.body.useremail,
       password: hash,
+     
     });
   console.log(newUser)
     await newUser.save();
