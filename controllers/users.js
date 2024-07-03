@@ -1,6 +1,6 @@
 import Poll from "../models/Poll.js";
 import Users from "../models/User.js";
-
+import Vote from "../models/Vote.js"
 export const getUser = async (req, res) => {
   try {
     const user = await Users.findById(req.params.user_id);
@@ -9,7 +9,10 @@ export const getUser = async (req, res) => {
     }
     
     const polls = await Poll.find({ created_by: req.params.user_id });
-    res.status(200).json({ success: "true", user: user, polls: polls });
+    const voted =await Vote.find({voted_by: req.params.user_id});
+   
+    const voteCount = voted.length; 
+    res.status(200).json({ success: "true", user: user, polls: polls ,voteCount:voteCount});
   } catch (error) {
     res.status(500).json({ success: "false", error: error.message });
   }
